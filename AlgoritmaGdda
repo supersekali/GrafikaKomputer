@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garis DDA</title>
+    <style>
+        body {
+            background-color: rgb(255, 254, 255);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvasku" width="800" height="800"></canvas>
+
+    <script>
+        let canvas = document.getElementById("canvasku");
+        let cetak = canvas.getContext("2d"); //   
+
+        cetak.fillStyle = "#000000"; //  
+        cetak.fillRect(0, 0, 500, 500);
+
+        function drawDDA(x0, y0, x1, y1) {
+            let dx = x1 - x0;
+            let dy = y1 - y0;
+
+            let step = Math.max(Math.abs(dx), Math.abs(dy));
+
+            let xIncrement = dx / step;
+            let yIncrement = dy / step;
+
+            let x = x0;
+            let y = y0;
+
+            for (let i = 0; i <= step; i++) {
+                cetak.fillStyle = "#ff0000"; // Perbaikan fillStyle
+                cetak.fillRect(Math.round(x), Math.round(y), 2, 2); // Pembulatan koordinat
+
+                x += xIncrement;
+                y += yIncrement;
+            }
+        }
+
+        drawDDA(450, 50, 50, 450);
+    </script>
+</body>
+
+</html>
