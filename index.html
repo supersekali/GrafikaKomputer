@@ -1,15 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>My first three.js app</title>
-        <style>
-          body { margin: 0; }
-        </style>
-    </head>
-  
-  <body>
-    <script type="module" src="/main.js"></script>
-  </body>
-  
+<html>
+<body>
+    <canvas id="myCanvas" width="1500" height="1000"></canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var context = canvas.getContext("2d");
+
+        // Fungsi menggambar titik kecil
+        function Titik(x, y) {
+            context.beginPath();
+            context.rect(x, y, 2, 2); // ukuran titik 2x2 pixel
+            context.fillStyle = "black";
+            context.fill();
+        }
+
+        // Fungsi menggambar garis dari x1,y1 ke x2,y2
+        function Garis(x1, y1, x2, y2) {
+            context.beginPath();
+            context.moveTo(x1, y1);
+            context.lineTo(x2, y2);
+            context.lineWidth = 1;
+            context.strokeStyle = "black";
+            context.stroke();
+        }
+
+        // Gambar titik di (10, 10)
+        Titik(10, 10);
+
+        // Gambar garis dari (100, 100) ke (300, 300)
+        Garis(100, 100, 300, 300);
+
+        // Tampilkan teks
+        context.font = "italic 40pt Calibri";
+        context.fillText("Belajar Grafika Komputer Menyenangkan!", 50, 100);
+    </script>
+</body>
 </html>
