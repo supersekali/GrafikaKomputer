@@ -1,49 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garis DDA</title>
-    <style>
-        body{
-            background-color: rgb(255, 254, 255);
-        }
-    </style>
-</head>
+<html>
 <body>
-    <canvas id="canvasku" width="500" height="500"> </canvas>
+    <canvas id="myCanvas" width="1500" height="1000"></canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var context = canvas.getContext("2d");
 
-        <script>
-            let canvas = document.getElementById("canvasku");
-            let ctx= canvas.getContext("2D");
+        // Fungsi untuk menggambar titik (piksel kecil)
+        function Titik(x, y) {
+            context.beginPath();
+            context.rect(x, y, 2, 2); // ukuran piksel 2x2
+            context.fillStyle = "black";
+            context.fill();
+        }
 
-            ctx.fillstyle = "#ffffff";
-            ctx.fillRect(0,0,500,500);
+        // Fungsi menggambar garis menggunakan algoritma Bresenham
+        function GarisBresenham(x1, y1, x2, y2) {
+            let dx = Math.abs(x2 - x1);
+            let dy = Math.abs(y2 - y1);
+            let sx = (x1 < x2) ? 1 : -1;
+            let sy = (y1 < y2) ? 1 : -1;
+            let err = dx - dy;
 
-            function drawDDA(x1, y2, x2, y2){
-                let dx = x2-x1;
-                let dy = y2-y1;
+            while (true) {
+                Titik(x1, y1); // gambar titik di posisi saat ini
 
-                let step = Math.max(Math.abs(dx), Math.abs(dy));
+                if (x1 === x2 && y1 === y2) break;
 
-                let xIncrement = dx / step;
-                let yIncrement = dy / step;
-
-                let x = x1;
-                let y = y1;
-
-                for(let i= 0; i <= step; i++){
-                    ctx.fillstyle="#ff0000";
-                    ctx.fillRect(x,y,2,2);
-
-                    x += xIncrement;
-                    y += yIncrement;
+                let e2 = 2 * err;
+                if (e2 > -dy) {
+                    err -= dy;
+                    x1 += sx;
+                }
+                if (e2 < dx) {
+                    err += dx;
+                    y1 += sy;
                 }
             }
+        }
 
-            drawDDA(450, 50, 50, 450);
-        </script>
-    
+        // Contoh pemanggilan fungsi
+        GarisBresenham(100, 100, 500, 300);  // garis miring
+        GarisBresenham(100, 100, 100, 400);  // garis vertikal
+        GarisBresenham(200, 200, 600, 200);  // garis horizontal
+
+        // Tampilkan teks di canvas
+        context.font = "italic 30pt Calibri";
+        context.fillText("Algoritma Bresenham!", 50, 80);
+    </script>
 </body>
 </html>
